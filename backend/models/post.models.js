@@ -11,14 +11,18 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    tags: [{
+        type: String,
+        required: true
+    }],
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    tags: [{
+    comments: [{
         type: String,
-        required: true
+        ref: 'Comment'
     }]
 }, {timestamps: true});
 

@@ -24,9 +24,10 @@ function App() {
                 });
                 const data = await response.json();
                 console.log(data);
-                if(data.user){
-                    setUser(data.user);
-                }
+                setUser(data)
+                // if(data.user){
+                //     setUser(data);
+                // }
             } catch (error) {
                 console.error('Error fetching user:', error);
             }
@@ -46,6 +47,10 @@ const ProtectedRoute = ({children}) => {
   return children
 }
 
+const isAuthenticated = !!Cookies.get('authToken');
+
+
+
   const handleSignup = (username, email, passowrd) => {
     signup(username, email, passowrd, setUser);
   };
@@ -54,11 +59,13 @@ const ProtectedRoute = ({children}) => {
     login(username, passowrd, setUser);
   }
 
+  // console.log(user);
+
  
 
   return (
       <BrowserRouter>
-        <Navbar/>
+        <Navbar isAuthenticated={isAuthenticated} username={user}/>
         <Routes>
           <Route path="/signup" element={<Signup signup={handleSignup}/>} />
           <Route path="/signin" element={<Signin login={handleLogin}/>} />
